@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+
+@theme {
+  /* Semantic Colors (OKLCH/Emerald) */
+  --color-primary: oklch(0.15 0.02 270);
+  /* Dark Slate for Background */
+  --color-surface: oklch(0.15 0.02 270);
+  --color-surface-sunken: oklch(0.12 0.02 270);
+
+  --color-accent: oklch(0.70 0.15 160);
+  /* Emerald 500 equivalent */
+  --color-accent-hover: oklch(0.65 0.15 160);
+
+  --color-text-main: oklch(0.98 0.01 270);
+  /* Near White */
+  --color-text-muted: oklch(0.60 0.02 270);
+  /* Grayish Slate */
+
+  --color-border: oklch(0.25 0.02 270);
+  /* Subtle Dark Border */
+  --color-border-hover: oklch(0.35 0.02 270);
+
+  /* Typography */
+  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-plus: 'Plus Jakarta Sans', sans-serif;
+
+  /* Animation */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+
+  .glass-button {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-all duration-300;
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px var(--color-accent);
+  }
+
+  .glow-border {
+    box-shadow: 0 0 20px -5px var(--color-accent);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Global Body Styles */
+  body {
+    @apply bg-neutral-950 text-neutral-50 font-sans;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Global CSS to completely hide all native scrollbars everywhere for a premium feel */
+  * {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Edge, Opera */
+  }
+
+  /* Utility to hide scrollbars globally for specific containers */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Animations & Visual Effects */
+  .bg-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  @keyframes cinematicEntrance {
+    0% {
+      transform: scale(1.2);
+      filter: blur(20px) grayscale(100%);
+      opacity: 0;
+    }
+
+    20% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(1);
+      filter: blur(0px) grayscale(0%);
+      opacity: 1;
+    }
+  }
+
+  .animate-cinematic {
+    animation: cinematicEntrance 3.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes shimmerMove {
+    0% {
+      transform: translateX(-150%) skewX(-20deg);
+    }
+
+    100% {
+      transform: translateX(200%) skewX(-20deg);
+    }
+  }
+
+  .animate-shimmer-effect {
+    animation: shimmerMove 3s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+
+  /* Liquid Glass System */
+  @keyframes blob-flow {
+    0% {
+      transform: translate(0px, 0px) scale(1) rotate(0deg);
+    }
+
+    33% {
+      transform: translate(100px, -50px) scale(1.1) rotate(120deg);
+    }
+
+    66% {
+      transform: translate(-50px, 100px) scale(0.9) rotate(240deg);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1) rotate(360deg);
+    }
+  }
+
+  .liquid-glass-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .liquid-blob {
+    position: absolute;
+    filter: blur(120px);
+    opacity: 0.3;
+    mix-blend-mode: screen;
+    animation: blob-flow 25s infinite linear;
+    will-change: transform;
+  }
+
+  .blob-1 {
+    top: -20%;
+    left: -20%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+  }
+
+  .blob-2 {
+    bottom: -30%;
+    right: -20%;
+    width: 80vw;
+    height: 80vw;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+    animation-direction: reverse;
+    animation-duration: 35s;
+  }
+
+  .glass-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    backdrop-filter: blur(40px);
+    background: rgba(10, 10, 10, 0.2);
+    box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.5);
+  }
+
+  /* ===== HOME PAGE ANIMATED BACKGROUND ===== */
+
+  @keyframes orb-drift-a {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    25% {
+      transform: translate(80px, -60px) scale(1.08);
+    }
+
+    50% {
+      transform: translate(160px, 40px) scale(0.95);
+    }
+
+    75% {
+      transform: translate(40px, 100px) scale(1.05);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  @keyframes orb-drift-b {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    30% {
+      transform: translate(-120px, 80px) scale(1.1);
+    }
+
+    60% {
+      transform: translate(-60px, -80px) scale(0.92);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  @keyframes orb-drift-c {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+
+    40% {
+      transform: translate(100px, 120px) scale(1.06);
+    }
+
+    80% {
+      transform: translate(-80px, 60px) scale(0.96);
+    }
+
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  @keyframes particle-float {
+
+    0%,
+    100% {
+      transform: translateY(0px) translateX(0px);
+      opacity: 0.3;
+    }
+
+    25% {
+      transform: translateY(-18px) translateX(8px);
+      opacity: 0.8;
+    }
+
+    50% {
+      transform: translateY(-10px) translateX(-6px);
+      opacity: 0.5;
+    }
+
+    75% {
+      transform: translateY(-22px) translateX(4px);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes grid-pulse {
+
+    0%,
+    100% {
+      opacity: 0.025;
+    }
+
+    50% {
+      opacity: 0.055;
+    }
+  }
+
+  .home-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    will-change: transform;
+    mix-blend-mode: screen;
+  }
+
+  .orb-a {
+    width: 60vw;
+    height: 60vw;
+    top: -20vh;
+    left: -15vw;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, transparent 65%);
+    animation: orb-drift-a 28s ease-in-out infinite;
+  }
+
+  .orb-b {
+    width: 50vw;
+    height: 50vw;
+    bottom: 5vh;
+    right: -15vw;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 65%);
+    animation: orb-drift-b 36s ease-in-out infinite;
+  }
+
+  .orb-c {
+    width: 40vw;
+    height: 40vw;
+    top: 40vh;
+    left: 30vw;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 65%);
+    animation: orb-drift-c 44s ease-in-out infinite;
+    animation-delay: -8s;
+  }
+
+  .home-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: grid-pulse 8s ease-in-out infinite;
+  }
+
+  .home-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+    animation: particle-float linear infinite;
+    will-change: transform;
+  }
+}
